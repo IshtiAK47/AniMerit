@@ -1,5 +1,2 @@
-# Firebase Studio
-
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+#AniMerit
+Just a site that uses JikanAPI to fetch top running anime series and movies
