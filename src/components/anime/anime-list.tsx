@@ -12,8 +12,8 @@ export function AnimeList({ animeList }: AnimeListProps) {
 
   return (
     <div className="flex flex-col items-center gap-8 w-full">
-      {animeList.map((anime) => (
-        <AnimeCard key={anime.mal_id} anime={anime} />
+      {animeList.map((anime, index) => (
+        <AnimeCard key={anime.mal_id} anime={anime} index={index} />
       ))}
     </div>
   );

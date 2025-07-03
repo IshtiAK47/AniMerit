@@ -12,13 +12,22 @@ import { cn } from '@/lib/utils';
 
 interface AnimeCardProps {
   anime: Anime;
+  index: number;
 }
 
-export function AnimeCard({ anime }: AnimeCardProps) {
+export function AnimeCard({ anime, index }: AnimeCardProps) {
   const [showFullSynopsis, setShowFullSynopsis] = useState(false);
 
   // A heuristic to check if synopsis is long enough to be truncated
   const canTruncate = anime.synopsis && anime.synopsis.length > 250;
+
+  const getOrdinal = (n: number) => {
+    const s = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  };
+  
+  const rankString = getOrdinal(index + 1);
 
   return (
     <Card className="w-full max-w-4xl overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:shadow-lg bg-card border-border flex flex-col sm:flex-row">
@@ -44,11 +53,9 @@ export function AnimeCard({ anime }: AnimeCardProps) {
                 <Star className="h-4 w-4 text-yellow-400" fill="currentColor" /> {anime.score.toFixed(2)}
               </Badge>
             )}
-            {anime.rank && (
-              <Badge variant="destructive" className="text-base font-bold shadow-md px-2 py-1">
-                #{anime.rank}
-              </Badge>
-            )}
+            <Badge variant="destructive" className="text-base font-bold shadow-md px-2 py-1">
+              {rankString}
+            </Badge>
           </div>
         </div>
 
