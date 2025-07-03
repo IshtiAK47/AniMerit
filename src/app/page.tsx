@@ -22,13 +22,23 @@ function AnimeListSkeleton() {
   );
 }
 
-async function SeriesList() {
-  const topSeries = await getTopAnime('tv', 12);
+async function WeeklySeriesList() {
+  const topSeries = await getTopAnime('tv', 12, 'airing');
   return <AnimeList animeList={topSeries} />;
 }
 
-async function MovieList() {
-  const topMovies = await getTopAnime('movie', 12);
+async function MonthlySeriesList() {
+  const topSeries = await getTopAnime('tv', 12, 'bypopularity');
+  return <AnimeList animeList={topSeries} />;
+}
+
+async function WeeklyMovieList() {
+  const topMovies = await getTopAnime('movie', 12, 'airing');
+  return <AnimeList animeList={topMovies} />;
+}
+
+async function MonthlyMovieList() {
+  const topMovies = await getTopAnime('movie', 12, 'bypopularity');
   return <AnimeList animeList={topMovies} />;
 }
 
@@ -48,12 +58,12 @@ export default function Home() {
             </div>
             <TabsContent value="weekly">
               <Suspense fallback={<AnimeListSkeleton />}>
-                <SeriesList />
+                <WeeklySeriesList />
               </Suspense>
             </TabsContent>
             <TabsContent value="monthly">
               <Suspense fallback={<AnimeListSkeleton />}>
-                <SeriesList />
+                <MonthlySeriesList />
               </Suspense>
             </TabsContent>
           </Tabs>
@@ -70,12 +80,12 @@ export default function Home() {
             </div>
             <TabsContent value="weekly">
               <Suspense fallback={<AnimeListSkeleton />}>
-                <MovieList />
+                <WeeklyMovieList />
               </Suspense>
             </TabsContent>
             <TabsContent value="monthly">
               <Suspense fallback={<AnimeListSkeleton />}>
-                <MovieList />
+                <MonthlyMovieList />
               </Suspense>
             </TabsContent>
           </Tabs>
