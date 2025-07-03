@@ -6,7 +6,6 @@ import type { Anime } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { SummaryButton } from './summary-button';
 import { ChevronDown, ChevronUp, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -80,9 +79,8 @@ export function AnimeCard({ anime, index }: AnimeCardProps) {
              <p className="text-sm italic">No synopsis available.</p>
           )}
         </div>
-
+        
         <div className="mt-auto pt-4 flex gap-4">
-          <SummaryButton title={anime.title} description={anime.synopsis} />
         </div>
       </CardContent>
     </Card>
