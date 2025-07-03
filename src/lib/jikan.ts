@@ -2,9 +2,16 @@ import type { JikanResponse, Anime } from './types';
 
 const JIKAN_API_URL = 'https://api.jikan.moe/v4';
 
-export async function getTopAnime(type: 'tv' | 'movie', limit: number = 10, filter: 'bypopularity' | 'airing' = 'bypopularity'): Promise<Anime[]> {
+export async function getTopAnime(type: 'tv' | 'movie', limit: number = 10, filter?: 'bypopularity' | 'airing'): Promise<Anime[]> {
   try {
-    const response = await fetch(`${JIKAN_API_URL}/top/anime?type=${type}&filter=${filter}&limit=${limit}`, {
+    const url = new URL(`${JIKAN_API_URL}/top/anime`);
+    url.searchParams.append('type', type);
+    url.searchParams.append('limit', String(limit));
+    if (filter) {
+      url.searchParams.append('filter', filter);
+    }
+    
+    const response = await fetch(url.toString(), {
         next: { revalidate: 3600 } // Revalidate every hour
     });
     

@@ -7,15 +7,20 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 function AnimeListSkeleton() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div key={i} className="flex flex-col space-y-3">
-          <Skeleton className="h-auto aspect-[2/3] w-full rounded-xl" />
-          <div className="space-y-2 pt-2">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6" />
+    <div className="flex flex-col items-center gap-8 w-full">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="flex flex-col sm:flex-row gap-6 w-full max-w-4xl p-4 border rounded-lg bg-card">
+          <Skeleton className="h-64 w-full sm:w-48 rounded-lg" />
+          <div className="flex-1 space-y-4">
+            <Skeleton className="h-8 w-3/4" />
+            <Skeleton className="h-4 w-1/4" />
+            <div className="space-y-2 pt-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+            </div>
+            <Skeleton className="h-10 w-40" />
           </div>
-          <Skeleton className="h-10 w-full" />
         </div>
       ))}
     </div>
@@ -23,22 +28,22 @@ function AnimeListSkeleton() {
 }
 
 async function WeeklySeriesList() {
-  const topSeries = await getTopAnime('tv', 12, 'airing');
+  const topSeries = await getTopAnime('tv', 10, 'airing');
   return <AnimeList animeList={topSeries} />;
 }
 
-async function MonthlySeriesList() {
-  const topSeries = await getTopAnime('tv', 12, 'bypopularity');
+async function TopRatedSeriesList() {
+  const topSeries = await getTopAnime('tv', 10);
   return <AnimeList animeList={topSeries} />;
 }
 
 async function WeeklyMovieList() {
-  const topMovies = await getTopAnime('movie', 12, 'airing');
+  const topMovies = await getTopAnime('movie', 10, 'airing');
   return <AnimeList animeList={topMovies} />;
 }
 
-async function MonthlyMovieList() {
-  const topMovies = await getTopAnime('movie', 12, 'bypopularity');
+async function TopRatedMovieList() {
+  const topMovies = await getTopAnime('movie', 10);
   return <AnimeList animeList={topMovies} />;
 }
 
@@ -53,7 +58,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight text-foreground">Top Anime Series</h2>
               <TabsList className="self-start sm:self-center">
                 <TabsTrigger value="weekly">This Week</TabsTrigger>
-                <TabsTrigger value="monthly">This Month</TabsTrigger>
+                <TabsTrigger value="monthly">Top Rated</TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="weekly">
@@ -63,7 +68,7 @@ export default function Home() {
             </TabsContent>
             <TabsContent value="monthly">
               <Suspense fallback={<AnimeListSkeleton />}>
-                <MonthlySeriesList />
+                <TopRatedSeriesList />
               </Suspense>
             </TabsContent>
           </Tabs>
@@ -75,7 +80,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold tracking-tight text-foreground">Top Anime Movies</h2>
               <TabsList className="self-start sm:self-center">
                 <TabsTrigger value="weekly">This Week</TabsTrigger>
-                <TabsTrigger value="monthly">This Month</TabsTrigger>
+                <TabsTrigger value="monthly">Top Rated</TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="weekly">
@@ -85,7 +90,7 @@ export default function Home() {
             </TabsContent>
             <TabsContent value="monthly">
               <Suspense fallback={<AnimeListSkeleton />}>
-                <MonthlyMovieList />
+                <TopRatedMovieList />
               </Suspense>
             </TabsContent>
           </Tabs>
