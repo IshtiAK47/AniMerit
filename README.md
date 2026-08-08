@@ -161,8 +161,3 @@ If you'd like to contribute:
 
 This project is licensed under the MIT License.
 
----
-
-<p align="center">
-  Built with Next.js and Jikan API.
-</p>
