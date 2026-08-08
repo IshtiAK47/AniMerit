@@ -121,9 +121,25 @@ AniMerit/
 
 ---
 
-## Screenshots
+## 🏗 Architecture
 
-*Add screenshots or a short demo GIF here.*
+```mermaid
+flowchart TD
+    User([User Device / Mobile]) --> Navbar[Navbar / MobileBottomNav]
+    Navbar --> ApiSelector[ApiSelector Component]
+    ApiSelector -->|State: jikan / anilist| ApiProviderContext[ApiProviderContext]
+    
+    ApiProviderContext --> UnifiedAPI[Unified API Router: services/unifiedApi.ts]
+    
+    UnifiedAPI -->|if provider == 'anilist'| AniListAPI[AniList GraphQL API]
+    UnifiedAPI -->|if provider == 'jikan'| JikanAPI[Jikan REST API v4]
+    
+    AniListAPI -->|GraphQL Response| Normalizer[Data Normalizer: lib/anilist.ts]
+    JikanAPI -->|REST JSON| Normalizer
+    
+    Normalizer -->|Unified Anime Model| UI[React 19 Pages & Components]
+    UI --> Cache[(TanStack Query Cache + LocalStorage)]
+```
 
 ---
 
